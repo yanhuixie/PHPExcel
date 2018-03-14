@@ -160,15 +160,19 @@ class PHPExcel_Writer_Excel2007_StringTable extends PHPExcel_Writer_Excel2007_Wr
                 $objWriter->endElement();
 
                 // Bold
-                $objWriter->startElement($prefix.'b');
-                $objWriter->writeAttribute('val', ($element->getFont()->getBold() ? 'true' : 'false'));
-                $objWriter->endElement();
+                if($element->getFont()->getBold()){
+                    $objWriter->startElement($prefix.'b');
+                    $objWriter->writeAttribute('val', 'true');
+                    $objWriter->endElement();
+                }
 
                 // Italic
-                $objWriter->startElement($prefix.'i');
-                $objWriter->writeAttribute('val', ($element->getFont()->getItalic() ? 'true' : 'false'));
-                $objWriter->endElement();
-
+                if($element->getFont()->getItalic()){
+                    $objWriter->startElement($prefix.'i');
+                    $objWriter->writeAttribute('val', 'true');
+                    $objWriter->endElement();
+                }
+                
                 // Superscript / subscript
                 if ($element->getFont()->getSuperScript() || $element->getFont()->getSubScript()) {
                     $objWriter->startElement($prefix.'vertAlign');
@@ -181,10 +185,12 @@ class PHPExcel_Writer_Excel2007_StringTable extends PHPExcel_Writer_Excel2007_Wr
                 }
 
                 // Strikethrough
-                $objWriter->startElement($prefix.'strike');
-                $objWriter->writeAttribute('val', ($element->getFont()->getStrikethrough() ? 'true' : 'false'));
-                $objWriter->endElement();
-
+                if($element->getFont()->getStrikethrough()){
+                    $objWriter->startElement($prefix.'strike');
+                    $objWriter->writeAttribute('val', 'true');
+                    $objWriter->endElement();
+                }
+                
                 // Color
                 $objWriter->startElement($prefix.'color');
                 $objWriter->writeAttribute('rgb', $element->getFont()->getColor()->getARGB());
